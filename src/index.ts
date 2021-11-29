@@ -1,5 +1,8 @@
 const sayHello = (name: string) => {
-  return `Hello!, ${name}!`
+  return `Hello, ${name}!`
 }
 
-console.log(sayHello('Tanaka'))
+var number: number = 3;
+
+console.log(sayHello('Tanaka'));
+console.log(number);
