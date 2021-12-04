@@ -70,16 +70,46 @@ var HitAndBlow = /** @class */ (function () {
     };
     HitAndBlow.prototype.play = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var inputArr;
+            var inputArr, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, promptInput('「,」区切りで3つの数字を入力してください')];
                     case 1:
                         inputArr = (_a.sent()).split(',');
-                        return [2 /*return*/];
+                        result = this.check(inputArr);
+                        if (!(result.hit !== this.answer.length)) return [3 /*break*/, 3];
+                        // 不正解だったら続ける
+                        printLine("---\nHit: " + result.hit + "\nBlow: " + result.blow + "\n---");
+                        this.tryCount += 1;
+                        return [4 /*yield*/, this.play()];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        // 正解だったら終了
+                        this.tryCount += 1;
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
+    };
+    HitAndBlow.prototype.check = function (input) {
+        var _this = this;
+        var hitCount = 0;
+        var blowCount = 0;
+        input.forEach(function (val, index) {
+            if (val === _this.answer[index]) {
+                hitCount += 1;
+            }
+            else if (_this.answer.includes(val)) {
+                blowCount += 1;
+            }
+        });
+        return {
+            hit: hitCount,
+            blow: blowCount
+        };
     };
     return HitAndBlow;
 }());
