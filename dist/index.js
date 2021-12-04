@@ -52,19 +52,48 @@ var promptInput = function (text) { return __awaiter(void 0, void 0, void 0, fun
         }
     });
 }); };
+var HitAndBlow = /** @class */ (function () {
+    function HitAndBlow() {
+        this.answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        this.answer = [];
+        this.tryCount = 0;
+    }
+    HitAndBlow.prototype.setting = function () {
+        var answerLength = 3;
+        while (this.answer.length < answerLength) {
+            var randNum = Math.floor(Math.random() * this.answerSource.length);
+            var selectedItem = this.answerSource[randNum];
+            if (!this.answer.includes(selectedItem)) {
+                this.answer.push(selectedItem);
+            }
+        }
+    };
+    HitAndBlow.prototype.play = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var inputArr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, promptInput('「,」区切りで3つの数字を入力してください')];
+                    case 1:
+                        inputArr = (_a.sent()).split(',');
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return HitAndBlow;
+}());
+;
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var name, age;
+    var hitAndBlow;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, promptInput('名前を入力してください。')];
+            case 0:
+                hitAndBlow = new HitAndBlow();
+                hitAndBlow.setting();
+                return [4 /*yield*/, hitAndBlow.play()];
             case 1:
-                name = _a.sent();
-                console.log(name);
-                return [4 /*yield*/, promptInput('年齢を入力してください。')];
-            case 2:
-                age = _a.sent();
-                console.log(age);
-                process.exit();
+                _a.sent();
                 return [2 /*return*/];
         }
     });
