@@ -39,16 +39,43 @@ var printLine = function (text, breakLine) {
     if (breakLine === void 0) { breakLine = true; }
     process.stdout.write(text + (breakLine ? '\n' : ''));
 };
+var readLine = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var input;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, new Promise(function (resolve) { return process.stdin.once('data', function (data) { return resolve(data.toString()); }); })];
+            case 1:
+                input = _a.sent();
+                return [2 /*return*/, input.trim()];
+        }
+    });
+}); };
 var promptInput = function (text) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        printLine("\n" + text + "\n", false);
+        return [2 /*return*/, readLine()];
+    });
+}); };
+var promptSelect = function (text, values) { return __awaiter(void 0, void 0, void 0, function () {
     var input;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                printLine("\n" + text + "\n", false);
-                return [4 /*yield*/, new Promise(function (resolve) { return process.stdin.once('data', function (data) { return resolve(data.toString()); }); })];
+                printLine("\n" + text);
+                values.forEach(function (value) {
+                    printLine("- " + value);
+                });
+                printLine(">", false);
+                return [4 /*yield*/, readLine()];
             case 1:
                 input = _a.sent();
-                return [2 /*return*/, input.trim()];
+                if (values.includes(input)) {
+                    return [2 /*return*/, input];
+                }
+                else {
+                    return [2 /*return*/, promptSelect(text, values)];
+                }
+                return [2 /*return*/];
         }
     });
 }); };
@@ -66,7 +93,7 @@ var HitAndBlow = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, promptInput('モードを入力してください。')];
+                        return [4 /*yield*/, promptSelect('モードを入力してください。', ['normal', 'hard'])];
                     case 1:
                         _a.mode = (_b.sent());
                         answerLength = this.getAnswerLength();
