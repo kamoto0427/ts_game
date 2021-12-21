@@ -123,3 +123,4 @@ class HitAndBlow {
 })()
 
 console.log('test');
+console.log('hello');
