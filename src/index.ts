@@ -121,3 +121,6 @@ class HitAndBlow {
   await hitAndBlow.play()
   hitAndBlow.end()
 })()
+
+console.log('test');
+console.log('hello');
